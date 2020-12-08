@@ -270,11 +270,11 @@ class MusicRecommender:
         '''Load data for training, validation and test before testing using whole data.'''
 
         # Get metadata for X and Y
-        all_X_meta_ab = self.load_sparse_csr(TRAINDATA_DIR + '/X_train_%s_%s.npz' % (meta_source_ab, dataset_ab))
+        all_X_meta_ab = self.load_sparse_csr(TRAINDATA_DIR + 'X_train_%s_%s.npz' % (meta_source_ab, dataset_ab))
         PARAMS['cnn']['n_metafeatures'] = all_X_meta_ab.shape[1]
-        all_X_meta_as = np.load(TRAINDATA_DIR + '/X_train_%s_%s.npy' % (meta_source_as, dataset_as))
+        all_X_meta_as = np.load(TRAINDATA_DIR + 'X_train_%s_%s.npy' % (meta_source_as, dataset_as))
         PARAMS['cnn']['n_metafeatures2'] = len(all_X_meta_as[0])
-        all_Y = np.load(TRAINDATA_DIR + '/y_train_als_200_MSD-A-songs.npy')
+        all_Y = np.load(TRAINDATA_DIR + 'y_train_als_200_MSD-A-songs.npy')
         normalize(all_Y, copy=False)
 
         # Calculate the number of sample for train and validation

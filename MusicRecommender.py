@@ -33,10 +33,10 @@ class MusicRecommender:
         # Change keras backend
         def set_keras_backend(backend):
             if K.backend() != backend:
-                environ['KERAS_BACKEND'] = 'theano'
+                environ['KERAS_BACKEND'] = 'tensorflow'
             reload(K)
             assert K.backend() == backend
-        set_keras_backend('theano')
+        set_keras_backend('tensorflow')
 
         # Set config
         self.__config = Config(PARAMS)

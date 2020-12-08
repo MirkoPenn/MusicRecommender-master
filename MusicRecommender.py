@@ -51,7 +51,7 @@ class MusicRecommender:
 
     def load_sparse_csr(self, filename):
         '''Load spare csr matrix from a file.'''
-
+        print(filename)
         loader = np.load(filename)
         return csr_matrix((loader['data'], loader['indices'], loader['indptr']), shape=loader['shape'])
 

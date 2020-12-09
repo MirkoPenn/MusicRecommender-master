@@ -2,7 +2,7 @@ from collections import OrderedDict
 import utils
 
 # Files and extensions
-DATA_DIR = 'dlrs-data/'
+DATA_DIR = '/content/drive/MyDrive/dlrs-data/dlrs-data/'
 TEXT_DIR = DATA_DIR + 'text/'
 AUDIO_DIR = DATA_DIR + 'audio/'
 AUDIOFILES_DIR = AUDIO_DIR + 'audio_files/'

@@ -274,13 +274,11 @@ class MusicRecommender:
         PARAMS['cnn']['n_metafeatures'] = all_X_meta_ab.shape[1]
         all_X_meta_as = np.load(TRAINDATA_DIR + 'X_train_%s_%s.npy' % (meta_source_as, dataset_as))
         PARAMS['cnn']['n_metafeatures2'] = len(all_X_meta_as[0])
-        all_Y_songs = np.load(SPLITS_DIR + 'y_train_als_200_MSD-A-songs.npy')
-        all_Y_artists = np.load(SPLITS_DIR + 'y_train_als_200_MSD-A-artists.npy')
-        all_Y = np.concatenate((all_Y_songs, all_Y_artists), axis=0)
-        print(all_Y_songs)
-        print(len(all_Y_songs))
-        print(all_Y)
-        print(len(all_Y))
+        all_Y = np.load(SPLITS_DIR + 'y_train_als_200_MSD-A-songs.npy')
+        #all_Y_artists = np.load(SPLITS_DIR + 'y_train_als_200_MSD-A-artists.npy')
+
+        normalize(all_Y, copy=False)
+        #normalize(all_Y_artists, copy=False)
 
         # Calculate the number of sample for train and validation
         N = all_Y.shape[0]
@@ -291,12 +289,11 @@ class MusicRecommender:
 
         # Get train, val, test data
         X_train = [all_X_meta_ab[:N_train], all_X_meta_as[:N_train]]
-        print(X_train)
-        normalize(all_Y, copy=False)
+        print(X_train.shape)
         X_val = [all_X_meta_ab[N_train:N_train + N_val], all_X_meta_as[N_train:N_train + N_val]]
         X_test = [all_X_meta_ab[N_train + N_val:], all_X_meta_as[N_train + N_val:]]
         Y_train = all_Y[:N_train]
-        print(len(Y_train))
+        print(Y_train.shape)
         Y_val = all_Y[N_train:N_train + N_val]
         Y_test = all_Y[N_train + N_val:]
 

@@ -312,9 +312,9 @@ class MusicRecommender:
         inputs_ab = Input(shape=(params["n_metafeatures"],))
         input_layer_ab = Dropout(params["dropout_factor_ab"])(inputs_ab)
 
-        dense_layer_ab = Dense(output_dim=params["n_dense_ab"], init='uniform', activation='relu')(input_layer_ab)
+        dense_layer_ab = Dense(params["n_dense_ab"], init='uniform', activation='relu')(input_layer_ab)
         dense_layer_ab = Dropout(params["dropout_factor_ab"])(dense_layer_ab)
-        dense_layer_ab = Dense(output_dim=params["n_dense_ab"], init='uniform', activation='relu')(dense_layer_ab)
+        dense_layer_ab = Dense(params["n_dense_ab"], init='uniform', activation='relu')(dense_layer_ab)
         dense_layer_ab = Dropout(params["dropout_factor_ab"])(dense_layer_ab)
         dense_layer_ab = Lambda(lambda x: K.l2_normalize(x, axis=1))(dense_layer_ab)
 
@@ -343,10 +343,10 @@ class MusicRecommender:
         # Concatenate layer
         concat_layer = concatenate([dense_layer_ab, audio_embedding_layer], axis=1)
         concat_layer = Dropout(params["dropout_factor_concat"])(concat_layer)
-        concat_layer = Dense(output_dim=params["n_dense_concat"], init="uniform", activation='relu')(concat_layer)
+        concat_layer = Dense(params["n_dense_concat"], init="uniform", activation='relu')(concat_layer)
 
         # Output layer
-        output_layer = Dense(output_dim=params["n_out"], init="uniform", activation=params['final_activation'])(concat_layer)
+        output_layer = Dense(params["n_out"], init="uniform", activation=params['final_activation'])(concat_layer)
         output_layer = Lambda(lambda x: K.l2_normalize(x, axis=1))(output_layer)
 
         # Final model

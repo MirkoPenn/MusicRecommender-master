@@ -276,7 +276,7 @@ class MusicRecommender:
         PARAMS['cnn']['n_metafeatures2'] = len(all_X_meta_as[0])
         all_Y_songs = np.load(SPLITS_DIR + 'y_train_als_200_MSD-A-songs.npy')
         all_Y_artists = np.load(SPLITS_DIR + 'y_train_als_200_MSD-A-artists.npy')
-        all_Y = [all_Y_songs[:], all_Y_artists[:]]
+        all_Y = np.concatenate((all_Y_songs, all_Y_artists), axis=0)
         print(all_Y_songs)
         print(len(all_Y_songs))
         print(all_Y)

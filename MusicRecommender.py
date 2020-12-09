@@ -281,7 +281,6 @@ class MusicRecommender:
         print(len(all_Y_songs))
         print(all_Y)
         print(len(all_Y))
-        normalize(all_Y, copy=False)
 
         # Calculate the number of sample for train and validation
         N = all_Y.shape[0]
@@ -289,9 +288,11 @@ class MusicRecommender:
         N_train = int(train_percent * N)
         N_val = int(val_percent * N)
 
+
         # Get train, val, test data
         X_train = [all_X_meta_ab[:N_train], all_X_meta_as[:N_train]]
         print(X_train)
+        normalize(all_Y, copy=False)
         X_val = [all_X_meta_ab[N_train:N_train + N_val], all_X_meta_as[N_train:N_train + N_val]]
         X_test = [all_X_meta_ab[N_train + N_val:], all_X_meta_as[N_train + N_val:]]
         Y_train = all_Y[:N_train]

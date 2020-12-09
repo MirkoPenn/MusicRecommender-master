@@ -289,12 +289,14 @@ class MusicRecommender:
 
         # Get train, val, test data
         X_train = [all_X_meta_ab[:N_train], all_X_meta_as[:N_train]]
-        print(len(X_train))
+        print(len(X_train[0]))
         X_val = [all_X_meta_ab[N_train:N_train + N_val], all_X_meta_as[N_train:N_train + N_val]]
+        print(len(X_val[0]))
         X_test = [all_X_meta_ab[N_train + N_val:], all_X_meta_as[N_train + N_val:]]
         Y_train = all_Y[:N_train]
         print(Y_train.shape)
         Y_val = all_Y[N_train:N_train + N_val]
+        print(Y_val.shape)
         Y_test = all_Y[N_train + N_val:]
 
         print("Training data points: %d" % N_train)

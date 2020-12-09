@@ -277,6 +277,10 @@ class MusicRecommender:
         all_Y_songs = np.load(SPLITS_DIR + 'y_train_als_200_MSD-A-songs.npy')
         all_Y_artists = np.load(SPLITS_DIR + 'y_train_als_200_MSD-A-artists.npy')
         all_Y = [all_Y_songs[:], all_Y_artists[:]]
+        print(all_Y_songs)
+        print(len(all_Y_songs))
+        print(all_Y)
+        print(len(all_Y))
         normalize(all_Y, copy=False)
 
         # Calculate the number of sample for train and validation

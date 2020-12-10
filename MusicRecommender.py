@@ -471,11 +471,11 @@ class MusicRecommender:
             TESTDATA_DIR + '/X_test_%s_%s.npz'
             % (meta_source_ab, PARAMS['dataset']['dataset_ab'])
         )
-        all_X_meta_as = np.load(TESTDATA_DIR + '/X_test_%s_%s.npy' % (meta_source_as, dataset_as))
+        all_X_meta_as = np.load(TESTDATA_DIR + 'X_test_%s_%s.npy' % (meta_source_as, dataset_as))
         print("Test data points for: %d" % all_X_meta_ab.shape[0])
 
         # Load index meta data
-        index_meta = open(TESTDATA_DIR + '/items_index_test_%s.tsv' % dataset_as).read().splitlines()
+        index_meta = open(TESTDATA_DIR + 'items_index_test_%s.tsv' % dataset_as).read().splitlines()
         index_meta_inv = dict()
         for i, item in enumerate(index_meta):
             index_meta_inv[item] = i

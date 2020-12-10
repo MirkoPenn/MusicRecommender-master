@@ -475,7 +475,7 @@ class MusicRecommender:
         print("Test data points for: %d" % all_X_meta_ab.shape[0])
 
         # Load index meta data
-        index_meta = open(TESTDATA_DIR + 'items_index_test_%s.tsv' % dataset_as).read().splitlines()
+        index_meta = open(SPLITS_DIR + 'items_index_test_%s.tsv' % dataset_as).read().splitlines()
         index_meta_inv = dict()
         for i, item in enumerate(index_meta):
             index_meta_inv[item] = i

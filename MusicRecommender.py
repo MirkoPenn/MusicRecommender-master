@@ -547,7 +547,7 @@ class MusicRecommender:
                 num_hits = 0.0
 
                 for i, p in enumerate(predicted):
-                    if p in actual and p in predicted[:i]:
+                    if p in actual:
                         num_hits += 1.0
 
                 if not actual:

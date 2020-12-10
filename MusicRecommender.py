@@ -467,14 +467,17 @@ class MusicRecommender:
         predictions_index = []
         
         # Load X_meta data
+        print("Loading "+TESTDATA_DIR + 'X_test_'+meta_source_ab+'_'+PARAMS['dataset']['dataset_ab']+'.npz')
         all_X_meta_ab = self.load_sparse_csr(
             TESTDATA_DIR + 'X_test_%s_%s.npz'
             % (meta_source_ab, PARAMS['dataset']['dataset_ab'])
         )
+        print("Loading "+TESTDATA_DIR + 'X_test_'+meta_source_as+'_'+dataset_as+'.npz')
         all_X_meta_as = np.load(TESTDATA_DIR + 'X_test_%s_%s.npy' % (meta_source_as, dataset_as))
         print("Test data points for: %d" % all_X_meta_ab.shape[0])
 
         # Load index meta data
+        print("Loading "+SPLITS_DIR + 'items_index_test_'+dataset_as+'.tsv')
         index_meta = open(SPLITS_DIR + 'items_index_test_%s.tsv' % dataset_as).read().splitlines()
         index_meta_inv = dict()
         for i, item in enumerate(index_meta):
@@ -495,17 +498,20 @@ class MusicRecommender:
         if not os.path.isdir(PREDICTIONS_DIR):
             os.makedirs(PREDICTIONS_DIR)
         np.save(PREDICTIONS_DIR + 'pred_%s' % model_id, predictions)
+        print("Loading "+PREDICTIONS_DIR + 'index_pred_'+model_id+'.tsv')
         fw = open(PREDICTIONS_DIR + 'index_pred_%s.tsv' % model_id, 'w')
         fw.write('\n'.join(predictions_index))
         fw.close()
 
         # Load user factors based on play counts of each song
+        print("Loading "+SPLITS_DIR + 'user_factors_'+fact+'_'+str(dim)+'_'+dataset_as+'.npy')
         user_factors = np.load(SPLITS_DIR + 'user_factors_%s_%s_%s.npy' % (fact, dim, dataset_as))
         user_factors = user_factors[:min(num_users, user_factors.shape[0])]        
 
         # Predict perferences of songs by users
         predicted_matrix_map = normalize(np.nan_to_num(predictions)).dot(user_factors.T).T
         best_song_indices = np.where(predicted_matrix_map == np.amax(predicted_matrix_map, axis=0))[1]
+        print(PREDICTIONS_DIR + 'track_recommendations.tsv')
         f = open(PREDICTIONS_DIR + 'track_recommendations.tsv', 'w')
         for i in best_song_indices:
             f.write(predictions_index[i] + '\n')
@@ -561,16 +567,19 @@ class MusicRecommender:
         print('Evaluating...')
 
         # Load ground truth
+        print("Loading "+SPLITS_DIR + 'items_index_test_'+model_settings['dataset_as']+'.tsv')
         index_matrix = open(SPLITS_DIR + 'items_index_test_%s.tsv' % (model_settings['dataset_as'])).read().splitlines()
         index_matrix_inv = dict((item,i) for i, item in enumerate(index_matrix))
         index_good = [index_matrix_inv[item] for item in predictions_index]
 
+        print("Loading "+SPLITS_DIR + 'matrix_test_'+model_settings['dataset_as']+'.npz')
         actual_matrix = self.load_sparse_csr(SPLITS_DIR + 'matrix_test_%s.npz' % model_settings['dataset_as'])
         actual_matrix_map = actual_matrix[:, :min(model_settings['num_users'], actual_matrix.shape[1])]
         actual_matrix_map = actual_matrix_map[index_good].T.toarray()
 
         # Write model settings
         if not os.path.exists(RESULTS_DIR): os.makedirs(RESULTS_DIR)
+        print("Loading "+RESULTS_DIR + 'eval_results.txt')
         fw = open(RESULTS_DIR + 'eval_results.txt', 'a')
         fw.write(
             model_id + ', ' + model_settings['dataset_ab'] + ', ' + model_settings['dataset_as'] + ', ' +

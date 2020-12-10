@@ -500,7 +500,7 @@ class MusicRecommender:
         fw.close()
 
         # Load user factors based on play counts of each song
-        user_factors = np.load(TESTDATA_DIR + '/user_factors_%s_%s_%s.npy' % (fact, dim, dataset_as))
+        user_factors = np.load(TESTDATA_DIR + 'user_factors_%s_%s_%s.npy' % (fact, dim, dataset_as))
         user_factors = user_factors[:min(num_users, user_factors.shape[0])]        
 
         # Predict perferences of songs by users
@@ -550,7 +550,7 @@ class MusicRecommender:
 
         # Write model settings
         if not os.path.exists(RESULTS_DIR): os.makedirs(RESULTS_DIR)
-        fw = open(RESULTS_DIR + '/eval_results.txt', 'a')
+        fw = open(RESULTS_DIR + 'eval_results.txt', 'a')
         fw.write(
             model_id + ', ' + model_settings['dataset_ab'] + ', ' + model_settings['dataset_as'] + ', ' +
             model_settings['configuration'] + ', ' + model_settings['meta-suffix'] + ', ' + 

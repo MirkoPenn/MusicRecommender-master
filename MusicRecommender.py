@@ -500,7 +500,7 @@ class MusicRecommender:
         fw.close()
 
         # Load user factors based on play counts of each song
-        user_factors = np.load(TESTDATA_DIR + 'user_factors_%s_%s_%s.npy' % (fact, dim, dataset_as))
+        user_factors = np.load(SPLITS_DIR + 'user_factors_%s_%s_%s.npy' % (fact, dim, dataset_as))
         user_factors = user_factors[:min(num_users, user_factors.shape[0])]        
 
         # Predict perferences of songs by users

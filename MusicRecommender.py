@@ -561,11 +561,11 @@ class MusicRecommender:
         print('Evaluating...')
 
         # Load ground truth
-        index_matrix = open(TESTDATA_DIR + 'items_index_test_%s.tsv' % (model_settings['dataset_as'])).read().splitlines()
+        index_matrix = open(SPLITS_DIR + 'items_index_test_%s.tsv' % (model_settings['dataset_as'])).read().splitlines()
         index_matrix_inv = dict((item,i) for i, item in enumerate(index_matrix))
         index_good = [index_matrix_inv[item] for item in predictions_index]
 
-        actual_matrix = self.load_sparse_csr(TESTDATA_DIR + 'matrix_test_%s.npz' % model_settings['dataset_as'])
+        actual_matrix = self.load_sparse_csr(SPLITS_DIR + 'matrix_test_%s.npz' % model_settings['dataset_as'])
         actual_matrix_map = actual_matrix[:, :min(model_settings['num_users'], actual_matrix.shape[1])]
         actual_matrix_map = actual_matrix_map[index_good].T.toarray()
 

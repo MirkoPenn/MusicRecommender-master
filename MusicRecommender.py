@@ -270,10 +270,10 @@ class MusicRecommender:
         '''Load data for training, validation and test before testing using whole data.'''
 
         # Get metadata for X and Y
-        print("Loading "+TRAINDATA_DIR + 'X_train_'+meta_source_ab+'_'+dataset_ab+'.npz')
+        print("Loading "+TRAINDATA_DIR + 'X_train_'+meta_source_ab+'_'+dataset_as+'.npz')
         all_X_meta_ab = self.load_sparse_csr(TRAINDATA_DIR + 'X_train_%s_%s.npz' % (meta_source_ab, dataset_as))
         PARAMS['cnn']['n_metafeatures'] = all_X_meta_ab.shape[1]
-        print("Loading "+TRAINDATA_DIR + 'X_train_'+meta_source_as+'_'+dataset_as+'.npz')
+        print("Loading "+TRAINDATA_DIR + 'X_train_'+meta_source_as+'_'+dataset_as+'.npy')
         all_X_meta_as = np.load(TRAINDATA_DIR + 'X_train_%s_%s.npy' % (meta_source_as, dataset_as))
         PARAMS['cnn']['n_metafeatures2'] = len(all_X_meta_as[0])
         print("Loading "+SPLITS_DIR + 'y_train_als_200_MSD-A-songs.npy')
@@ -467,12 +467,12 @@ class MusicRecommender:
         predictions_index = []
         
         # Load X_meta data
-        print("Loading "+TESTDATA_DIR + 'X_test_'+meta_source_ab+'_'+PARAMS['dataset']['dataset_ab']+'.npz')
+        print("Loading "+TESTDATA_DIR + 'X_test_'+meta_source_ab+'_'+PARAMS['dataset']['dataset_as']+'.npz')
         all_X_meta_ab = self.load_sparse_csr(
             TESTDATA_DIR + 'X_test_%s_%s.npz'
-            % (meta_source_ab, PARAMS['dataset']['dataset_ab'])
+            % (meta_source_ab, PARAMS['dataset']['dataset_as'])
         )
-        print("Loading "+TESTDATA_DIR + 'X_test_'+meta_source_as+'_'+dataset_as+'.npz')
+        print("Loading "+TESTDATA_DIR + 'X_test_'+meta_source_as+'_'+dataset_as+'.npy')
         all_X_meta_as = np.load(TESTDATA_DIR + 'X_test_%s_%s.npy' % (meta_source_as, dataset_as))
         print("Test data points for: %d" % all_X_meta_ab.shape[0])
 

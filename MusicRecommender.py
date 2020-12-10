@@ -517,10 +517,10 @@ class MusicRecommender:
                  predicted_matrix_map, predictions_index):
         '''Evaluate prediction results.'''
 
-        def calc_mapk(actual, predicted, k=10):
+        def calc_mapk(actual, predicted, k):
             ''' Caculate MAP.'''
 
-            def calc_apk(actual, predicted, k=10):
+            def calc_apk(actual, predicted, k):
                 if len(predicted) > k:
                     predicted = predicted[:k]
 
@@ -558,12 +558,29 @@ class MusicRecommender:
         )
 
         # MAP@k
-        k = 500
+        k = 100
         actual = [list(np.where(actual_matrix_map[i] > 0)[0]) for i in range(actual_matrix_map.shape[0])]
         predicted = list([list(l)[::-1][:k] for l in predicted_matrix_map.argsort(axis=1)])
-        map500 = calc_mapk(actual, predicted, k)
-        fw.write('MAP@500: %.5f\n' % map500)
-        print('MAP@500: %.5f' % map500)
+
+        map100 = calc_mapk(actual, predicted, 100)
+        fw.write('MAP@100: %.5f\n' % map100)
+        print('MAP@100: %.5f' % map100)
+
+        map50 = calc_mapk(actual, predicted, 50)
+        fw.write('MAP@50: %.5f\n' % map50)
+        print('MAP@50: %.5f' % map50)
+
+        map20 = calc_mapk(actual, predicted, 20)
+        fw.write('MAP@20: %.5f\n' % map20)
+        print('MAP@20: %.5f' % map20)
+
+        map10 = calc_mapk(actual, predicted, 10)
+        fw.write('MAP@10: %.5f\n' % map10)
+        print('MAP@10: %.5f' % map10)
+
+        map5 = calc_mapk(actual, predicted, 5)
+        fw.write('MAP@5: %.5f\n' % map5)
+        print('MAP@5: %.5f' % map5)
 
         fw.write('\n')
         fw.write(str_config)

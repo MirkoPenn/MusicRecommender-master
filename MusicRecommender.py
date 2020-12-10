@@ -537,6 +537,27 @@ class MusicRecommender:
 
             return np.mean([calc_apk(a, p, k) for a, p in zip(actual, predicted)])
 
+        def calc_mean_recall(actual, predicted, k):
+
+            def calc_recall(actual, predicted, k):
+                if len(predicted) > k:
+                    predicted = predicted[:k]
+
+                score = 0.0
+                num_hits = 0.0
+
+                for i, p in enumerate(predicted):
+                    if p in actual and p in predicted[:i]:
+                        num_hits += 1.0
+
+                if not actual:
+                    return 0.0
+
+                return num_hits / min(len(actual), k)
+
+            return np.mean([calc_recall(a, p, k) for a, p in zip(actual, predicted)])
+
+
         print('Evaluating...')
 
         # Load ground truth
@@ -566,21 +587,41 @@ class MusicRecommender:
         fw.write('MAP@100: %.5f\n' % map100)
         print('MAP@100: %.5f' % map100)
 
+        rec100 = calc_mean_recall(actual, predicted, 100)
+        fw.write('RECALL@100: %.5f\n' % rec100)
+        print('RECALL@100: %.5f' % rec100)
+
         map50 = calc_mapk(actual, predicted, 50)
         fw.write('MAP@50: %.5f\n' % map50)
         print('MAP@50: %.5f' % map50)
+
+        rec50 = calc_mean_recall(actual, predicted, 50)
+        fw.write('RECALL@50: %.5f\n' % rec50)
+        print('RECALL@50: %.5f' % rec50)
 
         map20 = calc_mapk(actual, predicted, 20)
         fw.write('MAP@20: %.5f\n' % map20)
         print('MAP@20: %.5f' % map20)
 
+        rec20 = calc_mean_recall(actual, predicted, 20)
+        fw.write('RECALL@20: %.5f\n' % rec20)
+        print('RECALL@20: %.5f' % rec20)
+
         map10 = calc_mapk(actual, predicted, 10)
         fw.write('MAP@10: %.5f\n' % map10)
         print('MAP@10: %.5f' % map10)
 
+        rec10 = calc_mean_recall(actual, predicted, 10)
+        fw.write('RECALL@10: %.5f\n' % rec10)
+        print('RECALL@10: %.5f' % rec10)
+
         map5 = calc_mapk(actual, predicted, 5)
         fw.write('MAP@5: %.5f\n' % map5)
         print('MAP@5: %.5f' % map5)
+
+        rec5 = calc_mean_recall(actual, predicted, 5)
+        fw.write('RECALL@5: %.5f\n' % rec5)
+        print('RECALL@5: %.5f' % rec5)
 
         fw.write('\n')
         fw.write(str_config)

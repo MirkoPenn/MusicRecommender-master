@@ -271,7 +271,7 @@ class MusicRecommender:
 
         # Get metadata for X and Y
         print("Loading "+TRAINDATA_DIR + 'X_train_'+meta_source_ab+'_'+dataset_ab+'.npz')
-        all_X_meta_ab = self.load_sparse_csr(TRAINDATA_DIR + 'X_train_%s_%s.npz' % (meta_source_ab, dataset_ab))
+        all_X_meta_ab = self.load_sparse_csr(TRAINDATA_DIR + 'X_train_%s_%s.npz' % (meta_source_ab, dataset_as))
         PARAMS['cnn']['n_metafeatures'] = all_X_meta_ab.shape[1]
         print("Loading "+TRAINDATA_DIR + 'X_train_'+meta_source_as+'_'+dataset_as+'.npz')
         all_X_meta_as = np.load(TRAINDATA_DIR + 'X_train_%s_%s.npy' % (meta_source_as, dataset_as))
